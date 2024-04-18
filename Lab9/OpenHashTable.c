@@ -9,6 +9,7 @@ struct node {
 
 typedef struct node *node;
 node hashTable[size];
+int comp = 0;
 
 void init() {
     for (int i = 0; i < size; i++) {
@@ -48,10 +49,28 @@ void printTable() {
     }
 }
 
+void search(int elm) {
+    int hashValue = elm % size;
+    node temp = hashTable[hashValue];
+    comp++;
+    if (temp->data == elm) {
+        printf("Element found");
+    } else {
+        while (temp != NULL) {
+            comp++;
+            temp = temp->next;
+            if (temp->data == elm && temp != NULL) {
+                printf("Element found");
+                break;
+            } else
+                break;
+        }
+    }
+}
 
 void main() {
     init();
-    int data, inputs;
+    int data, inputs, elm;
     printf("Amount of inputs: ");
     scanf("%d", &inputs);
     for (int i = 0; i < inputs; i++) {
@@ -59,4 +78,8 @@ void main() {
         insert(data);
     }
     printTable();
+    printf("Element to search: ");
+    scanf("%d", &elm);
+    search(elm);
+    printf("\nComparisons: %d", comp);
 }
